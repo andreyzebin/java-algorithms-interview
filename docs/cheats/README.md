@@ -11,6 +11,7 @@
 - [JVM Profiling](jvm-profiling.md) — jcmd, JFR, async-profiler
 - [OOM Profiling](oom-profiling.md) — виды OOM, heap dump, MAT
 - [Modern Java & JVM](modern-java-jvm.md) — фишки 9-25, Loom, Valhalla, Panama
+- [Modern Frameworks](modern-frameworks.md) — Quarkus, Micronaut, Helidon Níma, GraalVM Native
 
 ## SQL / Базы
 - [SQL](sql.md) — JOIN, window, CTE, идиомы
