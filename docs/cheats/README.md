@@ -20,5 +20,9 @@
 - [Query Plan Optimization](sql-query-optimization.md) — EXPLAIN, scan/join types
 - [ACID & Isolation](acid-isolation.md) — аномалии, уровни, MVCC, locks
 
-## Алгоритмы
-- См. `src/main/java/io/github/zebin/test/cheatsheet/Cheatsheet.java` (`./gradlew cheat`)
+## Алгоритмы (`./gradlew cheat`)
+Идиомы в `src/main/java/io/github/zebin/test/cheatsheet/`, разбиты по режиму вспоминания:
+- `LanguageIdioms.java` — «как написать X в Java»: arrays, strings, numbers, bits, math, collections, sort, gotchas
+- `AlgorithmPatterns.java` — техники: matrix, two pointers, sliding window, binary search, prefix sums, monotonic stack, greedy, backtracking, DP, fast input
+- `DataStructures.java` — структуры: graph/tree (BFS/DFS), linked list, trie, union-find, heap/top-K
+- `Cheatsheet.java` — лаунчер, запускает все три
