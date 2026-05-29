@@ -133,8 +133,64 @@ FROM pg_index GROUP BY indrelid, indkey HAVING COUNT(*) > 1;
 - `VACUUM` чистит dead tuples, не блокирует читы. `VACUUM FULL` блокирует, переписывает таблицу.
 - `ANALYZE` — обновляет статистику для оптимизатора
 
+## Index-Only Scan глубоко (PostgreSQL)
+
+### Как вообще работает индексный поиск
+B-Tree хранит **(ключ → ctid)**, где `ctid` = физический адрес строки в heap (номер страницы, смещение).
+Обычный **Index Scan**: пройти дерево → получить список ctid → **для каждого сходить в heap** (random IO) → прочитать строку.
+То есть 2 шага: индекс + heap fetch. Heap fetch — самое дорогое (random IO).
+
+### Index-Only Scan — пропускаем heap
+Если **всё нужное в SELECT есть в самом индексе**, heap читать не надо:
+```sql
+CREATE INDEX idx_score ON events (score);              -- или (score) INCLUDE (id)
+SELECT score FROM events WHERE score > 1000;           -- только score → index-only
+SELECT id, score FROM events WHERE score > 1000;       -- нужен id → covering: (score) INCLUDE (id)
+```
+В плане: `Index Only Scan using idx_score` + строка `Heap Fetches: N`.
+
+### Пример: миллиард строк, нужно score > x
+```sql
+CREATE INDEX idx_score ON events (score) INCLUDE (id, created_at);
+EXPLAIN (ANALYZE, BUFFERS)
+SELECT id, score, created_at FROM events WHERE score > 999000 ORDER BY score;
+```
+- B-Tree отсортирован по `score` → находит границу `score > 999000` бинарным спуском (O(log n)), дальше идёт **по листьям подряд** (range scan)
+- `ORDER BY score` бесплатен — индекс уже в этом порядке
+- `INCLUDE (id, created_at)` → всё в индексе → **Heap Fetches: 0**
+- Из миллиарда строк прочитаются только подходящие листья индекса, не вся таблица
+
+### ⚠️ Ловушка MVCC — почему index-only иногда всё равно лезет в heap
+Индекс в PostgreSQL **не хранит информацию о видимости** (какая транзакция создала/удалила версию строки). Видимость лежит в heap (`xmin`/`xmax` в заголовке строки).
+
+Чтобы index-only НЕ ходил в heap, PostgreSQL смотрит на **Visibility Map (VM)** — битмап, где бит выставлен, если на странице heap **все строки видимы всем** транзакциям. Бит ставит `VACUUM`.
+
+- Страница в VM как all-visible → видимость не проверяем → heap fetch не нужен ✅
+- Страница НЕ в VM (были недавние write/update) → **придётся сходить в heap** проверить `xmin/xmax` → `Heap Fetches` растёт, скорость падает ❌
+
+### Что это значит под нагрузкой write / в транзакциях
+- **UPDATE строки** в PG = новая версия строки (MVCC), часто на другой странице → страница теряет all-visible бит → index-only по этой странице начинает делать heap fetches
+- Активно меняющаяся таблица без своевременного `VACUUM` → VM устаревает → "index-only" фактически работает как обычный index scan (медленно)
+- Долгая транзакция держит старый snapshot → `VACUUM` не может пометить страницы all-visible (старые версии ещё нужны) → деградация index-only по всей таблице
+- Лечение: **агрессивный autovacuum** на горячих таблицах (`autovacuum_vacuum_scale_factor` ниже), не держать длинные транзакции, мониторить `Heap Fetches` в плане
+
+### HOT-update — смягчает проблему
+Если UPDATE **не меняет индексируемые колонки** и новая версия влезает на ту же страницу → **HOT (Heap-Only Tuple)**: индекс НЕ обновляется, цепочка версий внутри страницы. Меньше распухание индекса, проще vacuum. Поэтому: не индексируй часто меняющиеся колонки без нужды.
+
+### Проверки
+```sql
+-- видно ли index-only и сколько heap fetches
+EXPLAIN (ANALYZE, BUFFERS) SELECT score FROM events WHERE score > 1000;
+-- доля all-visible страниц (чем ближе к relpages — тем лучше для index-only)
+SELECT relname, relpages, relallvisible FROM pg_class WHERE relname = 'events';
+-- когда последний autovacuum
+SELECT relname, last_autovacuum, n_dead_tup FROM pg_stat_user_tables WHERE relname='events';
+```
+
 ## Часто на собесе
 - Объясни B-Tree
+- Как работает index-only scan и почему он может всё равно лезть в heap (visibility map, MVCC)
+- Что происходит с index-only scan на write-heavy таблице
 - Почему индекс на `LIKE '%x'` не работает
 - Что такое composite index и зачем порядок столбцов
 - Чем покрывающий индекс (covering / index-only) отличается от обычного

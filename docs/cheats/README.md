@@ -10,15 +10,20 @@
 - [Class Initialization](initialization.md) — порядок инициализации static/instance
 - [JVM Profiling](jvm-profiling.md) — jcmd, JFR, async-profiler
 - [OOM Profiling](oom-profiling.md) — виды OOM, heap dump, MAT
+- [JIT & Warmup](jit-and-warmup.md) — C1/C2, tiered, deopt, прогрев, CRaC, Leyden
 - [Modern Java & JVM](modern-java-jvm.md) — фишки 9-25, Loom, Valhalla, Panama
 - [Modern Frameworks](modern-frameworks.md) — Quarkus, Micronaut, Helidon Níma, GraalVM Native
 - [Banking / Transactional Stack](banking-stack.md) — VT vs reactive, JPA bottlenecks, saga, outbox, observability
 
 ## SQL / Базы
 - [SQL](sql.md) — JOIN, window, CTE, идиомы
-- [SQL Indexes](sql-indexes.md) — B-Tree, composite, partial, covering
-- [Query Plan Optimization](sql-query-optimization.md) — EXPLAIN, scan/join types
+- [SQL Indexes](sql-indexes.md) — B-Tree, composite, partial, covering, index-only scan + MVCC
+- [Query Plan Optimization](sql-query-optimization.md) — EXPLAIN, scan/join types, red flags
 - [ACID & Isolation](acid-isolation.md) — аномалии, уровни, MVCC, locks
+
+## SRE / Performance / Infra
+- [Perf & CPU Throttling](perf-cpu-throttling.md) — поиск медленного кода, USE/RED, CFS throttling в k8s
+- [SRE: Load Balancing](sre-load-balancing.md) — L4/L7, retry между кластерами, outlier detection, failover
 
 ## Алгоритмы (`./gradlew cheat`)
 Идиомы в `src/main/java/io/github/zebin/test/cheatsheet/`, разбиты по режиму вспоминания:

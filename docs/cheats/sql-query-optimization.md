@@ -146,6 +146,27 @@ REFRESH MATERIALIZED VIEW [CONCURRENTLY] user_stats;
 6. Index Scan но всё равно медленно → BUFFERS, IO-bound
 7. Длительность не на сканах, а на других нодах → проверить функции в SELECT, агрегации
 
+## На что смотреть в плане в первую очередь (red flags)
+
+1. **`rows` (estimate) vs `actual rows`** расходятся в 10×+ → статистика устарела (`ANALYZE`) или коррелированные колонки (`CREATE STATISTICS`). Оптимизатор строит плохой план на плохой оценке.
+2. **`Seq Scan` на большой таблице** с селективным `WHERE` → нет индекса / не используется.
+3. **`Rows Removed by Filter: N`** большое → читаем много, выбрасываем много — нужен более точный индекс.
+4. **`Heap Fetches: N`** в Index Only Scan большое → visibility map устарела, нужен VACUUM (см. sql-indexes).
+5. **`Sort Method: external merge Disk: NkB`** → сортировка не влезла в `work_mem`, ушла на диск.
+6. **`Nested Loop` с большим числом итераций** (loops=N большое) → нужен Hash/Merge Join или индекс на inner.
+7. **`Buffers: shared read=N`** большое (а не `hit`) → холодный кэш / IO-bound, данные не в `shared_buffers`.
+8. **Время сосредоточено в одной ноде** (`actual time` этой ноды ≫ детей) → вот узкое место.
+9. **`(never executed)`** ветки → планировщик их отбросил (норм, но проверь не из-за плохой оценки).
+
+`actual time=START..END` — START это время до первой строки, END до последней. `loops` умножает.
+
+## Виды search / scan — шпаргалка
+- **Seq Scan** — линейно вся таблица. Хорош только если берём большую долю строк.
+- **Index Scan** — спуск по B-Tree + heap fetch на каждую строку (random IO).
+- **Index Only Scan** — всё в индексе + visibility map, без heap (или почти). Быстрее всех на узкой выборке.
+- **Bitmap Index Scan → Bitmap Heap Scan** — собирает все ctid в битмап, потом читает heap **по порядку страниц** (sequential, не random). Для средней доли строк и для комбинирования нескольких индексов (`BitmapAnd`/`BitmapOr`).
+- **Index Scan Backward** — для `ORDER BY ... DESC` по тому же индексу.
+
 ## Часто на собесе
 - Что показывает EXPLAIN, как читать план
 - Чем отличается Nested Loop / Hash Join / Merge Join
