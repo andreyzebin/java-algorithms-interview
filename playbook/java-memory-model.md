@@ -74,7 +74,7 @@ Lazy + thread-safe + без synchronized (JLS гарантирует один `<
 - `LoadLoad`, `LoadStore`, `StoreLoad`, `StoreStore` — JVM расставляет вокруг volatile/synchronized в зависимости от архитектуры
 - На x86 многие барьеры дешевы (TSO), на ARM — нет
 
-## Часто на собесе
+## Что важно понимать
 - Расскажи про happens-before
 - Чем volatile отличается от synchronized
 - Почему `volatile counter++` — гонка

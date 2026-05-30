@@ -189,7 +189,7 @@ HAVING MIN(amount) > 100;
 SELECT DISTINCT user_id FROM orders WHERE amount > 100;
 ```
 
-## Часто на собесе
+## Что важно понимать
 - Разница INNER / LEFT / RIGHT / FULL JOIN
 - Чем отличается WHERE от HAVING
 - Чем GROUP BY от DISTINCT

@@ -1,7 +1,7 @@
 package io.github.zebin.test.cheatsheet;
 
 /**
- * Лаунчер шпаргалок. Запуск: ./gradlew cheat
+ * Лаунчер код-конспекта. Запуск: ./gradlew :tasks:cheat
  *
  * Идиомы разбиты на 3 класса по режиму вспоминания:
  *   1. {@link LanguageIdioms}    — «как написать X в Java» (синтаксис, recall).

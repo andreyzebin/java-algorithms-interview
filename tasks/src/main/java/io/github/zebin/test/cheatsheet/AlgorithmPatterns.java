@@ -3,9 +3,9 @@ package io.github.zebin.test.cheatsheet;
 import java.util.*;
 
 /**
- * Шпаргалка №2 — АЛГОРИТМИЧЕСКИЕ ПАТТЕРНЫ: техники решения задач.
+ * Конспект №2 — АЛГОРИТМИЧЕСКИЕ ПАТТЕРНЫ: техники решения задач.
  * То, что вспоминаешь, когда думаешь над подходом.
- * Запуск всего: ./gradlew cheat
+ * Запуск всего: ./gradlew :tasks:cheat
  */
 public class AlgorithmPatterns {
 
@@ -72,7 +72,7 @@ public class AlgorithmPatterns {
             }
         }
 
-        // спиральный обход (часто на собесах)
+        // спиральный обход (классический приём)
         List<Integer> spiral = spiral(m);
 
         // суммы строк / столбцов

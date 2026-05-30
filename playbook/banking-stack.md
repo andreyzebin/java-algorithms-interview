@@ -131,7 +131,7 @@ Spring Boot 3.2+ (или 4)
 | **Fallback** | деградация: вернуть кэш / дефолт / 503 |
 | **Idempotency key** | повторный POST не дублирует операцию |
 
-## Что говорить на собесе одной фразой
+## Кратко одной фразой
 
 > "Для нового transactional сервиса в 2026 — Spring Boot 3 на Tomcat с включёнными virtual threads, ZGC generational, синхронный JPA или Spring Data JDBC. Reactive стек не выбираю — VT покрывает throughput, debug/monitoring у реактива дороже. Узкое горлышко не в синхронности, а в connection pool — оно одинаковое у sync и reactive. Reactive оставляю для streaming / SSE / WebSocket. Если cold start критичен — Quarkus с native image."
 

@@ -1,6 +1,10 @@
-# Cheatsheets
+# Playbook — полевые заметки
 
-Шпаргалки для собеседования. Открывай в IntelliJ (preview .md — `Ctrl+Shift+A` → "Preview").
+Что ломается в Java-сервисе на проде и как с этим жить. Не учебник и не справочник API —
+конспект «под капотом + эксплуатация»: JVM internals, диагностика, данные под нагрузкой, SRE.
+Глубокий system design сознательно вынесен за скобки — тут слой рантайма и Ops.
+
+Открывай в IntelliJ (preview .md — `Ctrl+Shift+A` → "Preview").
 
 ## Java / JVM
 - [JVM](jvm.md) — структура, ClassLoader, JIT, флаги
@@ -25,9 +29,5 @@
 - [Perf & CPU Throttling](perf-cpu-throttling.md) — поиск медленного кода, USE/RED, CFS throttling в k8s
 - [SRE: Load Balancing](sre-load-balancing.md) — L4/L7, retry между кластерами, outlier detection, failover
 
-## Алгоритмы (`./gradlew cheat`)
-Идиомы в `src/main/java/io/github/zebin/test/cheatsheet/`, разбиты по режиму вспоминания:
-- `LanguageIdioms.java` — «как написать X в Java»: arrays, strings, numbers, bits, math, collections, sort, gotchas
-- `AlgorithmPatterns.java` — техники: matrix, two pointers, sliding window, binary search, prefix sums, monotonic stack, greedy, backtracking, DP, fast input
-- `DataStructures.java` — структуры: graph/tree (BFS/DFS), linked list, trie, union-find, heap/top-K
-- `Cheatsheet.java` — лаунчер, запускает все три
+---
+Бонус — алгоритмический код-конспект в модуле [`../tasks/`](../tasks): `./gradlew :tasks:cheat`.

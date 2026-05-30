@@ -83,7 +83,7 @@ cat /sys/fs/cgroup/cpu,cpuacct/cpu.stat
 6. Downstream: трейс (OTel) — где время? БД? внешний вызов?
 7. `availableProcessors()` внутри контейнера == ожидаемому лимиту?
 
-## Часто на собесе
+## Что важно понимать
 - Куда смотреть, если сервис тормозит (USE/RED, сверху вниз)
 - Как отличить CPU-bound от IO-bound
 - Что такое CFS throttling, как обнаружить (`throttled_periods`, `cpu.stat`)

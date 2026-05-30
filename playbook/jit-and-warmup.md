@@ -79,7 +79,7 @@ jcmd <pid> Compiler.queue             # очередь компиляции
 ```
 В JFR — событие "Compilation" и "Code Cache Statistics".
 
-## Часто на собесе
+## Что важно понимать
 - Что такое JIT, чем отличается от интерпретатора
 - Что такое C1 и C2, tiered compilation
 - Что такое OSR и deoptimization

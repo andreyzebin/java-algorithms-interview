@@ -187,7 +187,7 @@ SELECT relname, relpages, relallvisible FROM pg_class WHERE relname = 'events';
 SELECT relname, last_autovacuum, n_dead_tup FROM pg_stat_user_tables WHERE relname='events';
 ```
 
-## Часто на собесе
+## Что важно понимать
 - Объясни B-Tree
 - Как работает index-only scan и почему он может всё равно лезть в heap (visibility map, MVCC)
 - Что происходит с index-only scan на write-heavy таблице

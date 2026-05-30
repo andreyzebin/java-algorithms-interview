@@ -25,7 +25,7 @@
 | Память (native) | ~80MB | ~30MB | ~35MB | ~35MB |
 | Image size | 250-400MB → 80MB native | ~30-50MB | ~30-50MB | ~50MB |
 
-## Три топ-темы для собеса
+## Три главные темы
 
 ### 1. Virtual threads → конец reactive-эры
 - Project Loom (Java 21+) — миллион тонких потоков на маленьком carrier pool
@@ -45,7 +45,7 @@
 - Micronaut и Quarkus генерируют код DI/AOP **во время компиляции** (annotation processors)
 - → быстрее старт, меньше памяти, нативная компиляция работает из коробки
 
-## Что говорить на собесе
+## Как это формулировать
 
 - *"Если сервис под Lambda / Knative — Quarkus или Micronaut, native image из коробки"*
 - *"Helidon Níma — интересный кейс: переписан с Netty на virtual threads, синхронный код без reactive overhead"*

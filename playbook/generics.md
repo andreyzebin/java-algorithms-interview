@@ -95,7 +95,7 @@ class IntCmp implements Comparator<Integer> {
 }
 ```
 
-## Часто на собесе
+## Что важно понимать
 - Что такое type erasure и его последствия (нет `new T()`, нет `T[]`)
 - Объясни PECS
 - В чём разница `List<Object>` и `List<?>` (первая фиксирована — кладём всё; вторая — кладём только null)

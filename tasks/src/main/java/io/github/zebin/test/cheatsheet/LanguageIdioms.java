@@ -3,9 +3,9 @@ package io.github.zebin.test.cheatsheet;
 import java.util.*;
 
 /**
- * Шпаргалка №1 — ЯЗЫКОВЫЕ ИДИОМЫ: «как написать X в Java».
+ * Конспект №1 — ЯЗЫКОВЫЕ ИДИОМЫ: «как написать X в Java».
  * То, что нужно вспомнить мгновенно, пока пишешь код.
- * Запуск всего: ./gradlew cheat
+ * Запуск всего: ./gradlew :tasks:cheat
  */
 public class LanguageIdioms {
 

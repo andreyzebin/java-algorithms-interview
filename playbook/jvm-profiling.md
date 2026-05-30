@@ -108,7 +108,7 @@ CLI: `jmxterm`, программно: `jolokia` (HTTP-bridge для JMX).
 6. Lock contention → синхронизация
 7. GC log → паузы и причины
 
-## Часто на собесе
+## Что важно понимать
 - Какие инструменты профайлинга знаешь
 - Чем JFR отличается от стандартного jstack/jmap (постоянный low-overhead профиль)
 - Как снять thread dump в production

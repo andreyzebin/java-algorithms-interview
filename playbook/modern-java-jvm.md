@@ -176,7 +176,7 @@ Virtual threads, structured concurrency, scoped values.
 - Java 21 (2023, до 2031)
 - Java 25 (2025, до 2033)
 
-## Что в собес-разговоре звучит современно
+## Что звучит современно
 - "Используем records для DTO"
 - "Sealed-иерархия + pattern matching switch — type-safe state machine без visitor"
 - "Виртуальные потоки — отказались от Reactor / WebFlux в новых сервисах"

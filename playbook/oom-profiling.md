@@ -85,7 +85,7 @@ Pause time увеличивается со временем → leak или фр
 - ThreadLocal `remove()` в finally
 - WeakHashMap / WeakReference для caches которые не должны удерживать
 
-## Часто на собесе
+## Что важно понимать
 - Что такое heap dump, чем снимать
 - Какие виды OOM знаешь
 - Что такое GC overhead limit

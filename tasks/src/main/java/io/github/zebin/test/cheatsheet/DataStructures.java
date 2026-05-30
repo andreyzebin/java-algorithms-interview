@@ -3,9 +3,9 @@ package io.github.zebin.test.cheatsheet;
 import java.util.*;
 
 /**
- * Шпаргалка №3 — СТРУКТУРЫ ДАННЫХ: граф, дерево, связный список, trie, DSU, heap.
+ * Конспект №3 — СТРУКТУРЫ ДАННЫХ: граф, дерево, связный список, trie, DSU, heap.
  * Структуры с собственными узлами/классами + операции над ними.
- * Запуск всего: ./gradlew cheat
+ * Запуск всего: ./gradlew :tasks:cheat
  */
 public class DataStructures {
 

@@ -167,7 +167,7 @@ REFRESH MATERIALIZED VIEW [CONCURRENTLY] user_stats;
 - **Bitmap Index Scan → Bitmap Heap Scan** — собирает все ctid в битмап, потом читает heap **по порядку страниц** (sequential, не random). Для средней доли строк и для комбинирования нескольких индексов (`BitmapAnd`/`BitmapOr`).
 - **Index Scan Backward** — для `ORDER BY ... DESC` по тому же индексу.
 
-## Часто на собесе
+## Что важно понимать
 - Что показывает EXPLAIN, как читать план
 - Чем отличается Nested Loop / Hash Join / Merge Join
 - Что такое seq scan vs index scan
